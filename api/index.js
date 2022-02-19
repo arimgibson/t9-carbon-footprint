@@ -13,10 +13,11 @@ app.get('/', (req, res) => {
 // Gives information about *all* resources requested by your site. Provides the most in-depth data
 app.get("/api/:site/all", async (req, res) => {
   console.log("Request to API: All");
+  let data = await checkOptimizations(req.params.site);
   let cont = {
     website: req.params.site,
     "number_of_results": Object.keys(data).length,
-    data: await checkOptimizations(req.params.site)
+    data: data
   }
   res.json(cont);
 })

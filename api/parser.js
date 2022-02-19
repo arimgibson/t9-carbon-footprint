@@ -4,6 +4,7 @@ export default {
     let returnValue = {};
     for (let key in data) {
       let d = data[key];
+      console.log(d)
       if (!d.minified || d.compressed === "none" || d.HTTPError || (d.image && d.size >= 300000)) keysToKeep.push(key)
     };
     keysToKeep.forEach((key) => {

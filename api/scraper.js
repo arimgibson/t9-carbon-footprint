@@ -11,12 +11,15 @@ export async function checkOptimizations(url) {
 
   let data = {};
 
-  client.on("Network.responseReceived", ({ requestId, timestamp, type, response }) => {
-      let filename;
-      let file = response.url.substring(response.url.lastIndexOf("/") + 1).toLowerCase();
-      if (file.indexOf("?") < 0) filename = file;
-      else filename = file.substring(0, file.indexOf("?"));
+  client.on("Network.responseReceived", async ({ requestId, timestamp, type, response }) => {
+    let filename;
+    let file = response.url.substring(response.url.lastIndexOf("/") + 1).toLowerCase();
+    if (file.indexOf("?") < 0) filename = file;
+    else filename = file.substring(0, file.indexOf("?"));
 
+    if (filename === "%3e") return
+    else if (!filename) filename = "index.html"
+    
     type = type.toLowerCase();
     data[requestId] = {};
     let slot = data[requestId];
@@ -25,43 +28,43 @@ export async function checkOptimizations(url) {
     slot.timestamp = timestamp;
     slot.type = type;
 
-    // Minified?
-    switch (type) {
-      case "script":
-        slot.minified = isMinified.script(filename);
-        break;
-      case "stylesheet":
-        slot.minified = isMinified.style(filename);
-        break;
-      default:
-        slot.minified = null;
-    }
-
-    // Compressed?
-    if (response.headers && ["document", "stylesheet", "image", "media", "font", "script"].includes(type)) {
-      slot.compressed = isCompressed(response.headers);
-    } else {
-      slot.compressed = null;
-    }
-
-    // Efficient Image Types?
-    if (type === "image") {
-      slot.image = imageTypes(filename)
-    } else {
-      slot.image = null;
-    }
-
     // 400 Errors?
     if (response.status >=400 && response.status < 500) {
       slot.HTTPError = isHTTPError(response.status, response.statusText);
     } else {
       slot.HTTPError = false
     }
+
+    // Minified?
+    switch (type) {
+      case "script":
+        slot.minified = await isMinified.script(filename, response.url);
+        break;
+      case "stylesheet":
+        slot.minified = await isMinified.style(filename, response.url);
+        break;
+      default:
+        slot.minified = "n/a";
+    }
+
+    // Compressed?
+    if (response.headers && ["document", "stylesheet", "image", "media", "font", "script"].includes(type)) {
+      slot.compressed = await isCompressed(response.headers);
+    } else {
+      slot.compressed = null;
+    }
+
+    // Efficient Image Types?
+    if (type === "image") {
+      slot.image = await imageTypes(filename)
+    } else {
+      slot.image = null;
+    }
   });
 
   
   client.on("Network.loadingFinished", ({ requestId, encodedDataLength }) => {
-    data[requestId].size = encodedDataLength;
+    if (data[requestId]) data[requestId].size = encodedDataLength;
   });
 
   await page.goto(url, { waitUntil: "networkidle0" });
