@@ -1,0 +1,1 @@
+import { checkOptimizations } from "./puppeteer";
