@@ -11,8 +11,6 @@ export async function checkOptimizations(url) {
 
   let data = {};
 
-  let total = 0;
-
   client.on("Network.responseReceived", ({ requestId, timestamp, type, response }) => {
     let filename = response.url.substring(response.url.lastIndexOf("/") + 1).toLowerCase();
     type = type.toLowerCase();

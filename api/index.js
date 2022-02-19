@@ -1,5 +1,5 @@
 import express from "express";
-import { checkOptimizations } from "./scrapper.js";
+import { checkOptimizations } from "./scraper.js";
 import dataParser from "./parser.js";
 
 const app = express();
