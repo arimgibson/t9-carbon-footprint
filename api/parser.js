@@ -10,8 +10,6 @@ export default {
       returnValue[key] = data[key]
     })
 
-    console.log(keysToKeep.length)
-
     return returnValue;
   },
   paranoid: (data) => {
@@ -24,8 +22,6 @@ export default {
     keysToKeep.forEach((key) => {
       returnValue[key] = data[key]
     })
-
-    console.log(keysToKeep.length)
 
     return returnValue;
   },

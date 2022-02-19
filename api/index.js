@@ -1,5 +1,5 @@
 import express from "express";
-import { checkOptimizations } from "./puppeteer.js";
+import { checkOptimizations } from "./scrapper.js";
 import dataParser from "./parser.js";
 
 const app = express();
@@ -14,7 +14,6 @@ app.get('/', (req, res) => {
 app.get("/api/:site/all", async (req, res) => {
   console.log("Request to API: All");
   let data = await checkOptimizations(req.params.site);
-  console.log(Object.keys(data).length)
   res.json(data);
 })
 
