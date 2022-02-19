@@ -17,9 +17,9 @@ export async function checkOptimizations(url) {
     if (file.indexOf("?") < 0) filename = file;
     else filename = file.substring(0, file.indexOf("?"));
 
-    if (filename === "%3e") return
-    else if (!filename) filename = "index.html"
-    
+    if (filename === "%3e") return;
+    else if (!filename) filename = "index.html";
+
     type = type.toLowerCase();
     data[requestId] = {};
     let slot = data[requestId];
@@ -29,10 +29,10 @@ export async function checkOptimizations(url) {
     slot.type = type;
 
     // 400 Errors?
-    if (response.status >=400 && response.status < 500) {
+    if (response.status >= 400 && response.status < 500) {
       slot.HTTPError = isHTTPError(response.status, response.statusText);
     } else {
-      slot.HTTPError = false
+      slot.HTTPError = false;
     }
 
     // Minified?
@@ -47,28 +47,32 @@ export async function checkOptimizations(url) {
         slot.minified = "n/a";
     }
 
+    // Efficient Image Types?
+    if (type === "image") {
+      slot.image = await imageTypes(filename);
+    } else {
+      slot.image = null;
+    }
+
     // Compressed?
-    if (response.headers && ["document", "stylesheet", "image", "media", "font", "script"].includes(type)) {
+    if (
+      !filename.split(".").slice(-1)[0].startsWith("woff") &&
+      response.headers &&
+      ["document", "stylesheet", "image", "media", "font", "script"].includes(type)
+    ) {
       slot.compressed = await isCompressed(response.headers);
     } else {
       slot.compressed = null;
     }
-
-    // Efficient Image Types?
-    if (type === "image") {
-      slot.image = await imageTypes(filename)
-    } else {
-      slot.image = null;
-    }
   });
 
-  
   client.on("Network.loadingFinished", ({ requestId, encodedDataLength }) => {
+    if (encodedDataLength < 1000) delete data[requestId];
     if (data[requestId]) data[requestId].size = encodedDataLength;
   });
 
   await page.goto(url, { waitUntil: "networkidle0" });
   await browser.close();
 
-  return data
+  return data;
 }
