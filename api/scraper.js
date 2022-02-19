@@ -12,7 +12,11 @@ export async function checkOptimizations(url) {
   let data = {};
 
   client.on("Network.responseReceived", ({ requestId, timestamp, type, response }) => {
-    let filename = response.url.substring(response.url.lastIndexOf("/") + 1).toLowerCase();
+      let filename;
+      let file = response.url.substring(response.url.lastIndexOf("/") + 1).toLowerCase();
+      if (file.indexOf("?") < 0) filename = file;
+      else filename = file.substring(0, file.indexOf("?"));
+
     type = type.toLowerCase();
     data[requestId] = {};
     let slot = data[requestId];

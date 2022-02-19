@@ -10,7 +10,7 @@ export default {
       returnValue[key] = data[key]
     })
 
-    return returnValue;
+    return [returnValue, keysToKeep.length];
   },
   paranoid: (data) => {
     let keysToKeep = [];
@@ -23,6 +23,6 @@ export default {
       returnValue[key] = data[key]
     })
 
-    return returnValue;
+    return [returnValue, keysToKeep.length];
   },
 };

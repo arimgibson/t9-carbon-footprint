@@ -13,8 +13,12 @@ app.get('/', (req, res) => {
 // Gives information about *all* resources requested by your site. Provides the most in-depth data
 app.get("/api/:site/all", async (req, res) => {
   console.log("Request to API: All");
-  let data = await checkOptimizations(req.params.site);
-  res.json(data);
+  let cont = {
+    website: req.params.site,
+    "number_of_results": Object.keys(data).length,
+    data: await checkOptimizations(req.params.site)
+  }
+  res.json(cont);
 })
 
 
@@ -28,7 +32,13 @@ Gives an overview of the more significant concerns. Situations where:
 app.get("/api/:site", async (req, res) => {
   console.log("Request to API: Normal");
   let data = await checkOptimizations(req.params.site);
-  res.json(dataParser.normal(data))
+  let [parsedData, reqs] = dataParser.normal(data)
+  let cont = {
+    website: req.params.site,
+    "number_of_results": reqs,
+    data: parsedData
+  }
+  res.json(cont)
 })
 
 
@@ -43,7 +53,13 @@ Flags all areas of concern that are not following best possible practices. Situa
 app.get("/api/:site/paranoid", async (req, res) => {
   console.log("Request to API: Paranoid");
   let data = await checkOptimizations(req.params.site);
-  res.json(dataParser.paranoid(data))
+  let [parsedData, reqs] = dataParser.paranoid(data)
+  let cont = {
+    website: req.params.site,
+    "number_of_results": reqs,
+    data: parsedData
+  }
+  res.json(cont)
 })
 
 app.listen(port, () => {
