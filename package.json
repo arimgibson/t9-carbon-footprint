@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon api/index.js"
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/arimgibson/t9-carbon-footprint#readme",
   "type": "module",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.3",
     "got": "^12.0.1",
     "jsdom": "^19.0.0",
