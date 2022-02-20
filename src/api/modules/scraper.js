@@ -2,10 +2,16 @@ import puppeteer from "puppeteer";
 import isMinified from "./optimizations/minified.js";
 import isCompressed from "./optimizations/compressed.js";
 import imageTypes from "./optimizations/imageTypes.js";
+import isHTTPError from "./optimizations/HTTPError.js"
 
 export async function checkOptimizations(url) {
   url = "https://" + url;
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  });
   const page = await browser.newPage();
   const client = await page.target().createCDPSession();
   await client.send("Network.enable");
