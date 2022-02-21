@@ -13,19 +13,15 @@
 }
 
 .footer {
-  display: flex;
-  flex: 1;
+  text-align: center;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
 }
 
 .footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+  color: purple;
+  font-weight: bold;
+  
 }
 
 .title a {
@@ -114,3 +110,4 @@
     flex-direction: column;
   }
 }
+
