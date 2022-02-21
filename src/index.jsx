@@ -86,7 +86,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        Made by <a href="https://github.com/arimgibson">Ari</a> @ <a href="https://t9hacks.org">T9Hacks 2022</a>
+        Made by <a href="https://github.com/arimgibson">Ari</a> @ <a href="https://t9hacks.org">T9Hacks 2022</a>. Front end support from <a href="https://github.com/dawsbot">Dawson</a>.
       </footer>
     </div>
   );
