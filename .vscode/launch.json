@@ -8,10 +8,10 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "name": "Launch Express",
-      "program": "${workspaceFolder}/api/index.js",
+      "program": "${workspaceFolder}/dist/index.js",
       "request": "launch",
       "restart": true,
-      "runtimeExecutable": "nodemon",
+      "runtimeExecutable": "node",
       "skipFiles": [
         "<node_internals>/**"
       ],

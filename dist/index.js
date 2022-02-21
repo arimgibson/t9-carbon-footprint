@@ -10,13 +10,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use(cors());
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-app.use(express.static(__dirname + '/'));
 app.use("/api", apiRoutes);
 
 app.get("/", (req, res) => {
-	res.sendFile(__dirname + "/public/")
+	res.sendFile(__dirname + "/index.html")
+})
+
+app.get("/assets/index.c977734c.js", (req, res) => {
+	res.sendFile(__dirname + "/assets/index.c977734c.js")
+})
+
+app.get("/assets/index.aeb3b8c4.css", (req, res) => {
+	res.sendFile(__dirname + "/assets/index.aeb3b8c4.css")
+})
+
+app.get("/assets/vendor.7d0c9bf9.js", (req, res) => {
+	res.sendFile(__dirname + "/assets/vendor.7d0c9bf9.js")
 })
 
 app.listen(port, () => {
