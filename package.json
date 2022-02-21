@@ -1,39 +1,18 @@
 {
-  "name": "t9-carbon-footprint",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "vite-preact-starter",
+  "private": true,
+  "version": "0.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js && next start"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/arimgibson/t9-carbon-footprint.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/arimgibson/t9-carbon-footprint/issues"
-  },
-  "homepage": "https://github.com/arimgibson/t9-carbon-footprint#readme",
-  "type": "module",
   "dependencies": {
     "axios": "^0.26.0",
-    "cors": "^2.8.5",
-    "ejs": "^3.1.6",
-    "express": "^4.17.3",
-    "got": "^12.0.1",
-    "jsdom": "^19.0.0",
-    "next": "^12.1.0",
-    "node-fetch": "^3.2.0",
-    "puppeteer": "^13.3.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "preact": "^10.5.15"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "@preact/preset-vite": "^2.1.5",
+    "vite": "^2.8.0"
   }
 }
